@@ -20,6 +20,7 @@ namespace UDVAndroidTestApp.App.Repos
         public override async Task AddAsync(Message item, CancellationToken token)
         {
             await Context.Messages.AddAsync(item, token);
+            await Context.SaveChangesAsync();
         }
 
         public override Task AddRangeAsync(IEnumerable<Message> items, CancellationToken token)

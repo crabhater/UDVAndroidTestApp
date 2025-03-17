@@ -14,14 +14,14 @@ namespace UDVAndroidTestApp.Core.Servies.FluentBuilder
         public ChatBuilder()
         {
             model = new Chat();
-            model.Participants = new List<IAccount>();
+            model.Participants = new List<IUserReference>();
         }
         public ChatBuilder SetTitle(string title)
         {
             model.Title = title;
             return this;
         }
-        public ChatBuilder SetParticipants(IEnumerable<IAccount> accounts)
+        public ChatBuilder SetParticipants(IEnumerable<IUserReference> accounts)
         {
             model.Participants = accounts;
             return this;

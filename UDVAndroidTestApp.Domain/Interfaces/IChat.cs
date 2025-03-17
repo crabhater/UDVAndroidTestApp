@@ -10,6 +10,6 @@ namespace UDVAndroidTestApp.Core.Interfaces
     public interface IChat
     {
         public string Title { get; set; }
-        public IEnumerable<IAccount>? Participants { get; set; }
+        public IEnumerable<IUserReference>? Participants { get; set; }
     }
 }

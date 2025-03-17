@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UDVAndroidTestApp.Core.Models;
 using UDVAndroidTestApp.Data.Interfaces;
 using UDVAndroidTestApp.Data.Models;
 
@@ -13,11 +14,12 @@ namespace UDVAndroidTestApp.Data.DB
 {
     public class AppDataContext : DbContext, IAppDataContext
     {
-        public DbSet<Account> Accounts { get; set; }
+        public DbSet<Participant> Accounts { get; set; }
         public DbSet<Chat> Chats { get; set; }
         public DbSet<Message> Messages {  get; set; }
+        public DbSet<User> Users { get; set; }
 
-        //private readonly string _dbPath;
+        
         public AppDataContext(DbContextOptions<AppDataContext> options)
         : base(options)
         {
@@ -25,21 +27,25 @@ namespace UDVAndroidTestApp.Data.DB
             {
                 throw new InvalidOperationException();
             }
+
+            //var users = new List<User>()
+            //{
+            //    new User() { Description = "Хороший парень", Name = "Вадим" },
+            //    new User() { Description = "Отличный товарищ", Name = "Кирилл" },
+            //    new User() { Description = "Болтушка", Name = "Елизавета" },
+            //    new User() { Description = "Мега спец", Name = "Антон" },
+            //};
+            //Users.AddRange(users);
+            //SaveChanges();
+
         }
 
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    var folder = Environment.SpecialFolder.LocalApplicationData;
-        //    var path = Environment.GetFolderPath(folder);
-        //    var dbPath = System.IO.Path.Join(path, "Messages.db");
-        //    optionsBuilder.UseSqlite($"Data Source = {dbPath}");
-        //}
-
+        
         protected override async void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             var dbPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData), "appdata.db");
             
-            // Убедимся, что директория существует
+            
             var directory = Path.GetDirectoryName(dbPath);
             if (!Directory.Exists(directory))
             {

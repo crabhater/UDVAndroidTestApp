@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 using UDVAndroidTestApp.Core.Interfaces;
 using UDVAndroidTestApp.Data.Interfaces;
 
-namespace UDVAndroidTestApp.Data.Models
+namespace UDVAndroidTestApp.Core.Models
 {
-    public class Account : IAccount, IIdentityModel
+    public class User : IAccount, IIdentityModel
     {
         public int Id { get; set; }
-        public string? Name { get; set; }
-        public string? Description { get; set; }
-
+        public string? Name { get ; set ; }
+        public string? Description { get ; set ; }
     }
 }

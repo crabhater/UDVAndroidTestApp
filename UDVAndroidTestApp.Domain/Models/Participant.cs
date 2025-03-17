@@ -5,21 +5,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UDVAndroidTestApp.Core.Interfaces;
+using UDVAndroidTestApp.Core.Models;
 using UDVAndroidTestApp.Data.Interfaces;
 
 namespace UDVAndroidTestApp.Data.Models
 {
-    public class Chat : IChat, IIdentityModel
+    public class Participant : IIdentityModel, IUserReference
     {
         public int Id { get; set; }
-        public string? Title { get; set; }
-        public List<Participant>? participants
+        public User user 
         {
-            get => Participants?.Cast<Participant>().ToList();
-            set => Participants = value?.Cast<IUserReference>().ToList();
+            get => User as User; 
+            set => User = value;
         }
-
         [NotMapped]
-        public IEnumerable<IUserReference>? Participants { get; set; }
+        public IAccount User { get; set; }
     }
 }

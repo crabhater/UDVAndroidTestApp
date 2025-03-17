@@ -10,10 +10,11 @@ namespace UDVAndroidTestApp.ViewModels
 {
     public abstract class ViewModelBase : ObservableObject
     {
-        private readonly IRepositoryManager repoMgr;
+        protected readonly IRepositoryManager repoMgr;
         protected ViewModelBase(IRepositoryManager repoMgr)
         {
              this.repoMgr = repoMgr;
         }
+        public abstract void Init();
     }
 }

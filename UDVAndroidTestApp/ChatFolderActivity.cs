@@ -3,8 +3,10 @@ using Android.Content;
 using Android.OS;
 using Android.Widget;
 using Microsoft.Extensions.DependencyInjection;
+using UDVAndroidTestApp.Data.Models;
 using UDVAndroidTestApp.Services.DI;
 using UDVAndroidTestApp.ViewModels;
+using static Android.Icu.Text.CaseMap;
 
 namespace UDVAndroidTestApp
 {
@@ -12,7 +14,7 @@ namespace UDVAndroidTestApp
     public class ChatFolderActivity : Activity
     {
         private ChatFolderViewModel viewModel;
-        private ListView listView;
+        private ListView chatsListView;
         private Button showOptionsButton;
         private Button addContactButton;
         private Button addChatButton;
@@ -28,8 +30,15 @@ namespace UDVAndroidTestApp
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.chat_folder);
 
-            listView = FindViewById<ListView>(Resource.Id.chatListView);
-            listView.Adapter = new Adapters.ChatListAdapter(this, this.viewModel.Chats);
+            chatsListView = FindViewById<ListView>(Resource.Id.chatListView);
+            chatsListView.Adapter = new Adapters.ChatListAdapter(this, this.viewModel.Chats);
+            chatsListView.ItemClick += (sender, e) =>
+            {
+                var selectedChat = viewModel.Chats[e.Position];
+                var intent = new Intent(this, typeof(ChatActivity));
+                intent.PutExtra("ChatId", selectedChat.Id); 
+                StartActivity(intent);
+            };
 
             showOptionsButton = FindViewById<Button>(Resource.Id.showOptionsButton);
             addContactButton = FindViewById<Button>(Resource.Id.addContactButton);

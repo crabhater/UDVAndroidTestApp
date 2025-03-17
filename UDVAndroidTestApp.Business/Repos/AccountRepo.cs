@@ -10,38 +10,39 @@ using UDVAndroidTestApp.Data.Models;
 
 namespace UDVAndroidTestApp.App.Repos
 {
-    public class AccountRepo : RepositoryBase<Account>
+    public class AccountRepo : RepositoryBase<Participant>
     {
         public AccountRepo(IAppDataContext context) : base(context)
         {
         }
 
-        public override async Task AddAsync(Account item, CancellationToken token)
+        public override async Task AddAsync(Participant item, CancellationToken token)
         {
             await Context.Accounts.AddAsync(item, token);
+            await Context.SaveChangesAsync();
         }
 
-        public override Task AddRangeAsync(IEnumerable<Account> items, CancellationToken token)
+        public override Task AddRangeAsync(IEnumerable<Participant> items, CancellationToken token)
         {
             throw new NotImplementedException();
         }
 
-        public override Task DeleteAsync(Account item, CancellationToken token)
+        public override Task DeleteAsync(Participant item, CancellationToken token)
         {
             throw new NotImplementedException();
         }
 
-        public override IQueryable<Account> GetInstance()
+        public override IQueryable<Participant> GetInstance()
         {
             return Context.Accounts;
         }
 
-        public override Task<IEnumerable<Account>> GetInstanceAsync(Expression<Func<Account, bool>> predicate, CancellationToken token)
+        public override Task<IEnumerable<Participant>> GetInstanceAsync(Expression<Func<Participant, bool>> predicate, CancellationToken token)
         {
             throw new NotImplementedException();
         }
 
-        public override Task<bool> UpdateAsync(Account item, CancellationToken token)
+        public override Task<bool> UpdateAsync(Participant item, CancellationToken token)
         {
             throw new NotImplementedException();
         }

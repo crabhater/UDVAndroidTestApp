@@ -34,7 +34,7 @@ namespace UDVAndroidTestApp
 
             _participantsListView.ChoiceMode = ChoiceMode.Multiple;
 
-            var participantNames = _viewModel.AvailableAccounts.Select(a => a.Name).ToList();
+            var participantNames = _viewModel.AvailableAccounts.Select(a => a.User.Name).ToList();
             var adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItemMultipleChoice, participantNames);
             _participantsListView.Adapter = adapter;
 
@@ -42,7 +42,7 @@ namespace UDVAndroidTestApp
             {
                 _viewModel.ChatTitle = _chatTitleEditText.Text;
 
-                List<Account> selectedAccounts = new List<Account>();
+                List<Participant> selectedAccounts = new List<Participant>();
                 for (int i = 0; i < _participantsListView.Count; i++)
                 {
                     if (_participantsListView.IsItemChecked(i))

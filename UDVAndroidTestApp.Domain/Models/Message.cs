@@ -14,9 +14,9 @@ namespace UDVAndroidTestApp.Data.Models
         public int Id { get; set; }
         public string? Content { get; set; }
         public DateTime? Date { get; set; }
-        public Account? sender
+        public Participant? sender
         {
-            get => (Account)Sender;
+            get => (Participant)Sender;
             set => Sender = value;
         }
         public Chat chat 
@@ -25,7 +25,7 @@ namespace UDVAndroidTestApp.Data.Models
             set => Chat = value;
         }
         [NotMapped]
-        public IAccount Sender { get; set; }
+        public IUserReference Sender { get; set; }
         [NotMapped]
         public IChat Chat { get ; set ; }
     }

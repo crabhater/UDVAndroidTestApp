@@ -11,7 +11,7 @@ namespace UDVAndroidTestApp.Core.Interfaces
     {
         public string? Content { get; set; }
         public DateTime? Date { get; set; }
-        public IAccount Sender { get; set; }
+        public IUserReference Sender { get; set; }
         public IChat Chat { get; set; }
     }
 }

@@ -21,7 +21,7 @@ namespace UDVAndroidTestApp.Core.Servies.FluentBuilder
             model.Chat = chat;
             return this;
         }
-        public MessageBuilder SetSender(IAccount account)
+        public MessageBuilder SetSender(IUserReference account)
         {
             model.Sender = account;
             return this;

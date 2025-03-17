@@ -3,6 +3,7 @@ using Android.OS;
 using Android.Widget;
 using Microsoft.Extensions.DependencyInjection;
 using UDVAndroidTestApp.Adapters;
+using UDVAndroidTestApp.Core.Servies.FluentBuilder;
 using UDVAndroidTestApp.Services.DI;
 using UDVAndroidTestApp.ViewModels;
 
@@ -25,7 +26,9 @@ namespace UDVAndroidTestApp
 
             // Пример: получение ViewModel из контейнера
             var chatViewModel = serviceProvider.GetService<ChatViewModel>();
+            chatViewModel.ChatId = Intent.GetIntExtra("ChatId", 0);
             _viewModel = chatViewModel;
+            _viewModel.Init();
             
 
             _messagesListView = FindViewById<ListView>(Resource.Id.messagesListView);
@@ -33,6 +36,12 @@ namespace UDVAndroidTestApp
             _sendButton = FindViewById<Button>(Resource.Id.sendButton);
 
             _messagesListView.Adapter = new MessagesAdapter(this, _viewModel.Messages);
+
+            _sendButton.Click += (sernder, e) =>
+            {
+                var text = _inputMessageEditText.Text;
+                _viewModel.CreateMessage(text);
+            };
         }
     }
 }

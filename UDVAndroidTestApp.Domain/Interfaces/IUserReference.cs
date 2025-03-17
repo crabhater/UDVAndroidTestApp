@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace UDVAndroidTestApp.Core.Interfaces
 {
-    public interface IAccount
+    public interface IUserReference
     {
-        public string? Name { get; set; }
-        public string? Description { get; set; }
+        public IAccount User { get; set; }
     }
 }

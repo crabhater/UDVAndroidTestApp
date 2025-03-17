@@ -8,34 +8,36 @@ using System.Text;
 using System.Threading.Tasks;
 using UDVAndroidTestApp.App.Interfaces;
 using UDVAndroidTestApp.App.Repos;
+using UDVAndroidTestApp.Core.Interfaces;
 using UDVAndroidTestApp.Core.Servies.FluentBuilder;
 using UDVAndroidTestApp.Data.Models;
+using UDVAndroidTestApp.Services.Personality;
 
 namespace UDVAndroidTestApp.ViewModels
 {
     public partial class ChatCreationViewModel : ViewModelBase
     {
-        private readonly IRepository<Chat> _chatRepository;
 
         // Коллекция доступных участников (загружается из БД, здесь для примера добавляем вручную)
-        public ObservableCollection<Account> AvailableAccounts { get; set; } = new ObservableCollection<Account>();
+        public ObservableCollection<Participant> AvailableAccounts { get; set; } = new ObservableCollection<Participant>();
 
         [ObservableProperty]
         private string chatTitle;
 
         public ChatCreationViewModel(IRepositoryManager repoMgr) : base(repoMgr)
         {
-            _chatRepository = repoMgr.ChatsRepo;
+            Init();
+        }
 
-            // Пример загрузки участников — данные могут приходить из БД
-            AvailableAccounts.Add(new Account { Id = 1, Name = "Alice", Description = "Участник 1" });
-            AvailableAccounts.Add(new Account { Id = 2, Name = "Bob", Description = "Участник 2" });
-            AvailableAccounts.Add(new Account { Id = 3, Name = "Charlie", Description = "Участник 3" });
+        public override void Init()
+        {
+            var users = ImpersonateMgr.PhoneBook.Select(u => new Participant() { User = u });
+            AvailableAccounts = new ObservableCollection<Participant>(users);
         }
 
         // Команда для создания чата. В качестве параметра получаем список выбранных участников.
         [RelayCommand]
-        public async Task CreateChat(List<Account> selectedAccounts)
+        public async Task CreateChat(IEnumerable<IUserReference> selectedAccounts)
         {
             if (string.IsNullOrEmpty(ChatTitle))
             {
@@ -56,7 +58,7 @@ namespace UDVAndroidTestApp.ViewModels
             var newChat = builder.Build() as Chat;
 
             // Сохраняем новый чат в репозитории
-            await _chatRepository.AddAsync(newChat, new CancellationToken());
+            await repoMgr.ChatsRepo.AddAsync(newChat, new CancellationToken());
 
             // При необходимости можно сбросить поля или уведомить об успешном создании
         }
