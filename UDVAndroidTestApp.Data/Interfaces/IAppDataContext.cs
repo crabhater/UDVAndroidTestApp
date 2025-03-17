@@ -14,5 +14,6 @@ namespace UDVAndroidTestApp.Data.Interfaces
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Chat> Chats { get; set; }
         public DbSet<Message> Messages { get; set; }
+        public Task<int> SaveChangesAsync();
     }
 }

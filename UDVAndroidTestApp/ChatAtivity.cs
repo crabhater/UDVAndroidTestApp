@@ -8,13 +8,14 @@ using UDVAndroidTestApp.ViewModels;
 
 namespace UDVAndroidTestApp
 {
-    [Activity(Label = "ChatActivity", MainLauncher = true)]
+    [Activity(Label = "ChatActivity")]
     public class ChatActivity : Activity
     {
         private ChatViewModel _viewModel;
         private ListView _messagesListView;
         private EditText _inputMessageEditText;
         private Button _sendButton;
+
 
         protected override void OnCreate(Bundle savedInstanceState)
         {

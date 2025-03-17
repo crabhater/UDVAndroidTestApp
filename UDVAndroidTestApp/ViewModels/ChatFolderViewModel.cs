@@ -1,6 +1,7 @@
 ﻿using Android.App.Usage;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -18,16 +19,11 @@ namespace UDVAndroidTestApp.ViewModels
     {
         public ChatFolderViewModel(IRepositoryManager repoMgr) : base(repoMgr)
         {
-            Chats.Add(new Chat { Title = "Тест", Id = 1 } );
+            //Тащим из бд или предоставляем пустой список
+            var chatList = repoMgr.ChatsRepo.GetInstance().ToList();
+            Chats = new ObservableCollection<Chat>(chatList ?? new List<Chat>());
         }
-        [ObservableProperty]
-        private ChatFolder chatFolder;
-        public ObservableCollection<Chat> Chats { get; set; } = new ObservableCollection<Chat>();
+        public ObservableCollection<Chat> Chats { get; set; } 
 
-        [RelayCommand]
-        public async Task AddChat()
-        {
-
-        }
     }
 }

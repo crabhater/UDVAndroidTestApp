@@ -12,19 +12,31 @@ using UDVAndroidTestApp.App.Repos;
 
 namespace UDVAndroidTestApp.Services.DI
 {
+    /// <summary>
+    /// Стандартный DI от майкрософтов
+    /// </summary>
     public static class DependencyInjectionConfig
     {
         private static IServiceProvider serviceProvider;
+        /// <summary>
+        /// Все зависимоти тут
+        /// </summary>
         public static IServiceProvider ServiceProvider
         {
             get => serviceProvider ?? ConfigureServices();
         }
         
+        /// <summary>
+        /// Регистрация зависимостей приложения, тут модели представлений, инфраструктурные элементы типа репозиториев 
+        /// и контекст БД
+        /// </summary>
+        /// <returns></returns>
         private static IServiceProvider ConfigureServices()
         {
             var services = new ServiceCollection();
             services.AddTransient<ChatFolderViewModel>();
             services.AddTransient<ChatViewModel>();
+            services.AddTransient<ChatCreationViewModel>();
 
 
             services.AddDbContext<IAppDataContext, AppDataContext>();

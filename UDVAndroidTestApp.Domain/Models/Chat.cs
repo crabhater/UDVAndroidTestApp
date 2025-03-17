@@ -12,14 +12,14 @@ namespace UDVAndroidTestApp.Data.Models
     public class Chat : IChat, IIdentityModel
     {
         public int Id { get; set; }
-        public string Title { get; set; }
-        public List<Account> participants
+        public string? Title { get; set; }
+        public List<Account>? participants
         {
-            get => Participants.Cast<Account>().ToList();
-            set => Participants = value.Cast<IAccount>().ToList();
+            get => Participants?.Cast<Account>().ToList();
+            set => Participants = value?.Cast<IAccount>().ToList();
         }
 
         [NotMapped]
-        public IEnumerable<IAccount> Participants { get; set; }
+        public IEnumerable<IAccount>? Participants { get; set; }
     }
 }

@@ -37,7 +37,7 @@ namespace UDVAndroidTestApp.Adapters
 
             senderTextView.Text = "sender"; //message.Sender;
             contentTextView.Text = message.Content;
-            dateTextView.Text = message.Date.ToString("HH:mm");
+            dateTextView.Text = message.Date.Value.ToString("HH:mm");
 
             return view;
         }

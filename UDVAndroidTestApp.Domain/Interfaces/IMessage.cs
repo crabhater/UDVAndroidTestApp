@@ -9,8 +9,8 @@ namespace UDVAndroidTestApp.Core.Interfaces
 {
     public interface IMessage
     {
-        public string Content { get; set; }
-        public DateTime Date { get; set; }
+        public string? Content { get; set; }
+        public DateTime? Date { get; set; }
         public IAccount Sender { get; set; }
         public IChat Chat { get; set; }
     }
