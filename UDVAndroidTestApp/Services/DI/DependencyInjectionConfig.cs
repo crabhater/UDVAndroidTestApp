@@ -9,6 +9,8 @@ using UDVAndroidTestApp.Data.Interfaces;
 using UDVAndroidTestApp.Data.DB;
 using UDVAndroidTestApp.App.Interfaces;
 using UDVAndroidTestApp.App.Repos;
+using UDVAndroidTestApp.Core.Models;
+using UDVAndroidTestApp.Core.Interfaces;
 
 namespace UDVAndroidTestApp.Services.DI
 {
@@ -37,10 +39,13 @@ namespace UDVAndroidTestApp.Services.DI
             services.AddTransient<ChatFolderViewModel>();
             services.AddTransient<ChatViewModel>();
             services.AddTransient<ChatCreationViewModel>();
+            services.AddTransient<UserCreationViewModel>();
+            services.AddTransient<LoginViewModel>();
 
 
             services.AddDbContext<IAppDataContext, AppDataContext>();
             services.AddSingleton<IRepositoryManager, RepositoryManager>();
+            services.AddSingleton<IImpersonateMgr, ImpersonateMgr>();
 
             serviceProvider = services.BuildServiceProvider();
             return serviceProvider;

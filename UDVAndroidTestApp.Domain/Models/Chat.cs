@@ -13,13 +13,13 @@ namespace UDVAndroidTestApp.Data.Models
     {
         public int Id { get; set; }
         public string? Title { get; set; }
-        public List<Participant>? participants
-        {
-            get => Participants?.Cast<Participant>().ToList();
-            set => Participants = value?.Cast<IUserReference>().ToList();
-        }
+        public List<Participant>? participants { get; set; }
 
         [NotMapped]
-        public IEnumerable<IUserReference>? Participants { get; set; }
+        public IEnumerable<IUserReference>? Participants
+        {
+            get => participants;
+            set => participants = value?.Cast<Participant>().ToList();
+        }
     }
 }

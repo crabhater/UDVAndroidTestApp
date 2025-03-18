@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UDVAndroidTestApp.Core.Interfaces;
 using UDVAndroidTestApp.Data.Models;
 
 namespace UDVAndroidTestApp.Adapters
@@ -18,6 +19,12 @@ namespace UDVAndroidTestApp.Adapters
         {
             _context = context;
             _messages = messages;
+
+            // Подписываемся на изменения коллекции
+            _messages.CollectionChanged += (sender, args) =>
+            {
+                NotifyDataSetChanged(); // Перерисовка UI при изменениях
+            };
         }
         public override Message this[int position] => _messages[position];
 
@@ -35,7 +42,7 @@ namespace UDVAndroidTestApp.Adapters
             var contentTextView = view.FindViewById<TextView>(Resource.Id.contentTextView);
             var dateTextView = view.FindViewById<TextView>(Resource.Id.dateTextView);
 
-            senderTextView.Text = "sender"; //message.Sender;
+            senderTextView.Text = message.Sender.User.Name ?? "";
             contentTextView.Text = message.Content;
             dateTextView.Text = message.Date.Value.ToString("HH:mm");
 

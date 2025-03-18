@@ -58,5 +58,11 @@ namespace UDVAndroidTestApp
                 Finish(); 
             };
         }
+
+        protected override void OnStop()
+        {
+            base.OnStop();
+            _viewModel.EventsDelete();
+        }
     }
 }

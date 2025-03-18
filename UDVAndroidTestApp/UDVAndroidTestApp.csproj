@@ -16,17 +16,19 @@
     <None Remove="Resources\layout\chat_folder.xml" />
     <None Remove="Resources\layout\chat_message_item.xml" />
     <None Remove="Resources\layout\create_chat.xml" />
+    <None Remove="Resources\layout\create_user.xml" />
+    <None Remove="Resources\layout\login.xml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.3" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\UDVAndroidTestApp.Business\UDVAndroidTestApp.App.csproj" />
     <ProjectReference Include="..\UDVAndroidTestApp.Data\UDVAndroidTestApp.Data.csproj" />
     <ProjectReference Include="..\UDVAndroidTestApp.Domain\UDVAndroidTestApp.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\" />
   </ItemGroup>
 </Project>

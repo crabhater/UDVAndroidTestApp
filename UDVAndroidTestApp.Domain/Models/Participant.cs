@@ -13,12 +13,12 @@ namespace UDVAndroidTestApp.Data.Models
     public class Participant : IIdentityModel, IUserReference
     {
         public int Id { get; set; }
-        public User user 
-        {
-            get => User as User; 
-            set => User = value;
-        }
+        public User? user {  get; set; }
         [NotMapped]
-        public IAccount User { get; set; }
+        public IAccount User
+        {
+            get => user;
+            set => user = value as User;
+        }
     }
 }

@@ -1,17 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
+using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UDVAndroidTestApp.App.Interfaces;
-using UDVAndroidTestApp.App.Repos;
 using UDVAndroidTestApp.Core.Interfaces;
 using UDVAndroidTestApp.Core.Servies.FluentBuilder;
 using UDVAndroidTestApp.Data.Models;
-using UDVAndroidTestApp.Services.Personality;
+using UDVAndroidTestApp.Events;
 
 namespace UDVAndroidTestApp.ViewModels
 {
@@ -24,15 +19,18 @@ namespace UDVAndroidTestApp.ViewModels
         [ObservableProperty]
         private string chatTitle;
 
-        public ChatCreationViewModel(IRepositoryManager repoMgr) : base(repoMgr)
+        public ChatCreationViewModel(IRepositoryManager repoMgr, IImpersonateMgr impMgr) : base(repoMgr, impMgr)
         {
-            Init();
+            LoadData();
         }
 
-        public override void Init()
+        public override void EventsInit()
         {
-            var users = ImpersonateMgr.PhoneBook.Select(u => new Participant() { User = u });
-            AvailableAccounts = new ObservableCollection<Participant>(users);
+            
+        }
+        public override void EventsDelete()
+        {
+            
         }
 
         // Команда для создания чата. В качестве параметра получаем список выбранных участников.
@@ -41,12 +39,10 @@ namespace UDVAndroidTestApp.ViewModels
         {
             if (string.IsNullOrEmpty(ChatTitle))
             {
-                // Здесь можно уведомить пользователя, что необходимо ввести название
                 return;
             }
             if (selectedAccounts == null || !selectedAccounts.Any())
             {
-                // Здесь можно уведомить пользователя, что нужно выбрать хотя бы одного участника
                 return;
             }
 
@@ -60,7 +56,16 @@ namespace UDVAndroidTestApp.ViewModels
             // Сохраняем новый чат в репозитории
             await repoMgr.ChatsRepo.AddAsync(newChat, new CancellationToken());
 
-            // При необходимости можно сбросить поля или уведомить об успешном создании
+
+            WeakReferenceMessenger.Default.Send(new ChatCreatedMessage());
         }
+
+        public override Task LoadData()
+        {
+            var users = impersonateMgr.PhoneBook.Select(u => new Participant() { User = u });
+            AvailableAccounts = new ObservableCollection<Participant>(users);
+            return Task.CompletedTask;
+        }
+
     }
 }

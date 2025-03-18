@@ -12,7 +12,7 @@ namespace UDVAndroidTestApp
         {
             base.OnCreate(savedInstanceState);
 
-            var intent = new Intent(this, typeof(ChatFolderActivity));
+            var intent = new Intent(this, typeof(LoginActivity));
             StartActivity(intent);
 
             SetContentView(Resource.Layout.activity_main);

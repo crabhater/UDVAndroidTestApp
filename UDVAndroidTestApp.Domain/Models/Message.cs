@@ -14,19 +14,19 @@ namespace UDVAndroidTestApp.Data.Models
         public int Id { get; set; }
         public string? Content { get; set; }
         public DateTime? Date { get; set; }
-        public Participant? sender
+        public Participant? sender { get; set; }
+        public Chat? chat { get; set; }
+        [NotMapped]
+        public IUserReference Sender
         {
-            get => (Participant)Sender;
-            set => Sender = value;
-        }
-        public Chat chat 
-        {
-            get => (Chat)Chat;
-            set => Chat = value;
+            get => sender;
+            set => sender = value as Participant;
         }
         [NotMapped]
-        public IUserReference Sender { get; set; }
-        [NotMapped]
-        public IChat Chat { get ; set ; }
+        public IChat Chat
+        {
+            get => chat;
+            set => chat = value as Chat;
+        }
     }
 }

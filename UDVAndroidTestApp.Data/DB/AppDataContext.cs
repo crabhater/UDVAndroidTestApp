@@ -25,18 +25,17 @@ namespace UDVAndroidTestApp.Data.DB
         {
             if (Database.EnsureCreated())
             {
-                throw new InvalidOperationException();
+                var users = new List<User>()
+                {
+                    new User() { Description = "Хороший парень", Name = "Вадим" },
+                    new User() { Description = "Отличный товарищ", Name = "Кирилл" },
+                    new User() { Description = "Болтушка", Name = "Елизавета" },
+                    new User() { Description = "Мега спец", Name = "Антон" },
+                };
+                Users.AddRange(users);
+                SaveChanges();
             }
 
-            //var users = new List<User>()
-            //{
-            //    new User() { Description = "Хороший парень", Name = "Вадим" },
-            //    new User() { Description = "Отличный товарищ", Name = "Кирилл" },
-            //    new User() { Description = "Болтушка", Name = "Елизавета" },
-            //    new User() { Description = "Мега спец", Name = "Антон" },
-            //};
-            //Users.AddRange(users);
-            //SaveChanges();
 
         }
 

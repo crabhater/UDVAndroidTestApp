@@ -8,22 +8,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UDVAndroidTestApp.Data.Models;
+using UDVAndroidTestApp.ViewModels;
 
 
 namespace UDVAndroidTestApp.Adapters
 {
-    public class ChatListAdapter : BaseAdapter<Chat>
+    public class ChatListAdapter : BaseAdapter<ChatListItemViewModel>
     {
-        private readonly ObservableCollection<Chat> _chats;
+        private readonly ObservableCollection<ChatListItemViewModel> _chats;
+        private readonly Message _lastMessage;
         private readonly Context _context;
 
-        public ChatListAdapter(Context context, ObservableCollection<Chat> chats)
+        public ChatListAdapter(Context context, ObservableCollection<ChatListItemViewModel> chats)
         {
             _context = context;
             _chats = chats;
+
+            // Подписываемся на изменения коллекции
+            _chats.CollectionChanged += (sender, args) =>
+            {
+                NotifyDataSetChanged(); // Перерисовка UI при изменениях
+            };
         }
 
-        public override Chat this[int position] => _chats[position];
+        public override ChatListItemViewModel this[int position] => _chats[position];
 
         public override int Count => _chats.Count;
 
@@ -33,12 +41,9 @@ namespace UDVAndroidTestApp.Adapters
         {
             var chat = _chats[position];
 
-            // Создаем/переиспользуем элемент списка
             View view = convertView ?? LayoutInflater.From(_context).Inflate(Android.Resource.Layout.SimpleListItem2, parent, false);
-
-            // Устанавливаем текст для названия чата и последнего сообщения
-            view.FindViewById<TextView>(Android.Resource.Id.Text1).Text = chat.Title;
-            view.FindViewById<TextView>(Android.Resource.Id.Text2).Text = $"{chat} ({chat.Id})";
+            view.FindViewById<TextView>(Android.Resource.Id.Text1).Text = chat.Chat.Title;
+            view.FindViewById<TextView>(Android.Resource.Id.Text2).Text =$"{chat.LastMessage.Sender.User.Name}: { chat.LastMessage.Content} - {chat.LastMessage.Date.Value.ToString("HH:mm")}";
 
             return view;
         }

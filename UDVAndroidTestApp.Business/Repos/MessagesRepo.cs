@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -19,7 +20,7 @@ namespace UDVAndroidTestApp.App.Repos
 
         public override async Task AddAsync(Message item, CancellationToken token)
         {
-            await Context.Messages.AddAsync(item, token);
+            var res = await Context.Messages.AddAsync(item, token);
             await Context.SaveChangesAsync();
         }
 
@@ -35,7 +36,7 @@ namespace UDVAndroidTestApp.App.Repos
 
         public override IQueryable<Message> GetInstance()
         {
-            return Context.Messages;
+            return Context.Messages.Include(m => m.sender);
         }
 
         public override Task<IEnumerable<Message>> GetInstanceAsync(Expression<Func<Message, bool>> predicate, CancellationToken token)

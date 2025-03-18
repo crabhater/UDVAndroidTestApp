@@ -32,17 +32,20 @@ namespace UDVAndroidTestApp
 
             chatsListView = FindViewById<ListView>(Resource.Id.chatListView);
             chatsListView.Adapter = new Adapters.ChatListAdapter(this, this.viewModel.Chats);
+            
+            showOptionsButton = FindViewById<Button>(Resource.Id.showOptionsButton);
+            addContactButton = FindViewById<Button>(Resource.Id.addContactButton);
+            addChatButton = FindViewById<Button>(Resource.Id.addChatButton);
+
+            //Открытие чата по нажатию, перекинет в интерфейс чата
             chatsListView.ItemClick += (sender, e) =>
             {
                 var selectedChat = viewModel.Chats[e.Position];
                 var intent = new Intent(this, typeof(ChatActivity));
-                intent.PutExtra("ChatId", selectedChat.Id); 
+                intent.PutExtra("ChatId", selectedChat.Chat.Id); 
                 StartActivity(intent);
             };
 
-            showOptionsButton = FindViewById<Button>(Resource.Id.showOptionsButton);
-            addContactButton = FindViewById<Button>(Resource.Id.addContactButton);
-            addChatButton = FindViewById<Button>(Resource.Id.addChatButton);
 
             //Управление отображением кнопок + анимация появления кнопок
             showOptionsButton.Click += (sender, e) =>
@@ -81,15 +84,34 @@ namespace UDVAndroidTestApp
 
                 dialog.DismissEvent += (sender, e) =>
                 {
-                    //Если нажали кнопку Добавить, идем в интерфейс создания чата
+                    //Если нажали кнопку Добавить, идем в интерфейс создания чата + забираем название чата из popup
                     if (dialogRes)
                     {
                         var intent = new Intent(this, typeof(ChatCreationActivity));
-                        intent.PutExtra("ChatTitle", title); //Передаём название чата
+                        intent.PutExtra("ChatTitle", title); 
                         StartActivity(intent);
                     }
                 };
             };
+
+            addContactButton.Click += (sender, e) =>
+            {
+                var intent = new Intent(this, typeof(UserCreationActivity));
+                StartActivity(intent);
+            };
         }
+
+        protected override void OnStop()
+        {
+            base.OnStop();
+            viewModel.EventsDelete();
+        }
+        protected override void OnResume()
+        {
+            base.OnResume();
+            viewModel.EventsDelete();
+            viewModel.EventsInit();
+        }
+
     }
 }
