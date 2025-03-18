@@ -43,8 +43,14 @@ namespace UDVAndroidTestApp.Adapters
 
             View view = convertView ?? LayoutInflater.From(_context).Inflate(Android.Resource.Layout.SimpleListItem2, parent, false);
             view.FindViewById<TextView>(Android.Resource.Id.Text1).Text = chat.Chat.Title;
-            view.FindViewById<TextView>(Android.Resource.Id.Text2).Text =$"{chat.LastMessage.Sender.User.Name}: { chat.LastMessage.Content} - {chat.LastMessage.Date.Value.ToString("HH:mm")}";
-
+            if(chat.LastMessage != null)
+            {
+                view.FindViewById<TextView>(Android.Resource.Id.Text2).Text =$"{chat.LastMessage.Sender.User.Name}: { chat.LastMessage.Content} - {chat.LastMessage.Date.Value.ToString("HH:mm")}";
+            }
+            else
+            {
+                view.FindViewById<TextView>(Android.Resource.Id.Text2).Text = "";
+            }
             return view;
         }
     }

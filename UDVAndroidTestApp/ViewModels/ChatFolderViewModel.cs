@@ -52,7 +52,7 @@ namespace UDVAndroidTestApp.ViewModels
                 var lastMessage = await repoMgr.MessageRepo.GetInstance()
                                                        .Where(m => m.chat.Id == chat.Id)
                                                        .OrderByDescending(m => m.Id)
-                                                       .FirstOrDefaultAsync() ?? new Message();
+                                                       .FirstOrDefaultAsync();
                 Chats.Add(new ChatListItemViewModel(chat, lastMessage));
             }
         }
